@@ -24,7 +24,7 @@ nidhi_system::nidhi_system()
     semidense_tracker.stamps_ros = &stamps_ros ;
 
     boost::thread thread_semidense_tracker(&ThreadSemiDenseTracker,&semidense_tracker,&odom_pub,&pub_image);
-
+    
 };
 nidhi_system::~nidhi_system()
 {
@@ -35,7 +35,7 @@ void nidhi_system::imgcb(const sensor_msgs::Image::ConstPtr& msg)
 {
 	cv_bridge::CvImageConstPtr cv_ptr;
 	try{
-		cv_bridge::toCvShare(msg);
+		//cv_bridge::toCvShare(msg);
 		cv_ptr=cv_bridge::toCvShare(msg);
 		stamps_ros =  cv_ptr->header.stamp;
         stamps = cv_ptr->header.stamp.toSec();

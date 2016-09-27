@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(nidhi)
 #add_definitions(-Wall -std=c++11 -Werror=return-type ${PCL_DEFINITIONS})
+add_definitions(-Wcpp ${PCL_DEFINITIONS})
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 #set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
@@ -63,12 +65,14 @@ include_directories(
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall -Wextra -pedantic  -Wcast-qual -Wpointer-arith -Winit-self -Wswitch-default -Wmissing-include-dirs -Wold-style-cast -Wnon-virtual-dtor -Wshadow -Wno-unknown-pragmas")
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
+
 link_directories(${PCL_LIBRARY_DIRS})
 ###########
 ## Build ##
 ###########
 add_executable(nidhi ${DENSE_HEADER_FILES} ${DENSE_SOURCE_FILES})
-target_link_libraries(nidhi ${OpenCV_LIBS} ${catkin_LIBRARIES})
+target_link_libraries(nidhi ${OpenCV_LIBS} ${catkin_LIBRARIES} ${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES} ${PCL_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
 
 
  install(PROGRAMS

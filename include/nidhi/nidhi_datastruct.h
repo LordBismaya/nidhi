@@ -3,6 +3,7 @@
 
 #include <nidhi/nidhi_headers.h>
 
+
 class ImageFrame
 {
 public:
@@ -15,17 +16,25 @@ public:
 
 	std::vector<cv::Mat> image_pyr,grad_pyr;
 
-	int kf_n;
+	bool isKF;
 
 	cv::Mat R,t,t_r;
 
 	vector<cv::Mat> points;
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr;
+
+    
 	
 	void setFrame(cv::Mat image_frame_inp);
 	void calc_GrayImage(cv::Mat image_frame);
 	void calc_GradPyramids(cv::Mat image_gray);
 	void computePointsImage();
+	cv::Mat calcRot(cv::Mat KF_rot);
+	cv::Mat calcTrans(cv::Mat KF_trans);
+	pcl::PointCloud<pcl::PointXYZ>::Ptr MatToPoinXYZ();
+	void type2str(cv::Mat M);
 
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr MatToPoinXYZ2();
 
 };
 #endif

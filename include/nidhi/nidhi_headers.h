@@ -35,6 +35,12 @@ using namespace Eigen;
 
 #include <nav_msgs/Odometry.h>
 
+//PCL Libraries
+#include <pcl/common/projection_matrix.h>
+#include <pcl/point_cloud.h>
+#include <pcl/common/transforms.h>
+#include <pcl/visualization/pcl_visualizer.h>
+
 using namespace std;
 
 #endif

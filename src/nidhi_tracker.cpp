@@ -37,21 +37,42 @@ void semidense_tracking(ImageFrame *KeyFrame,ImageFrame *CurrentFrame,NidhiTrack
 		
 		semidense_tracker->frame_curr_n=*semidense_tracker->cont_frames;
 		CurrentFrame->setFrame((*semidense_tracker->image_frame).clone());
+		
+		
+		//AON: Set the KF as the very first frame. NEXT:Each 10 frames?
 		if((semidense_tracker->frame_kf_n)==0)
 		{
 			KeyFrame->setFrame((CurrentFrame->image_frame).clone());
 			semidense_tracker->frame_kf_n=semidense_tracker->frame_curr_n;
+			KeyFrame->isKF=true;
 		}
 
 		cv::Mat image_show=(CurrentFrame->grad_pyr[semidense_tracker->pyramid_levels-1-1-1]).clone();
 		sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(),"mono8",image_show).toImageMsg();
 		pub_image->publish(msg);
-
 		
-	}	
-	
+		visualizePoints(CurrentFrame->point_cloud_ptr);
+	}
+}
+void visualizePoints(pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr)
+{
+	pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
+	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZRGB> source_cloud_color_handler (point_cloud_ptr, 255, 255, 255);
+ 	pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGB> source_cloud_color_handler (point_cloud_ptr);
+ 	 
+ 	 // We add the point cloud to the viewer and pass the color handler
+	viewer.addPointCloud (point_cloud_ptr, source_cloud_color_handler, "original_cloud");
+	viewer.addCoordinateSystem (100.0, 0);
+	viewer.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
+  	viewer.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
+  	while (!viewer.wasStopped ()) 
+  	{ // Display the visualiser until 'q' key is pressed
+    	viewer.spinOnce ();
+  	}
+
 }
 
+/*
 void prepare_image(cv::Mat &image_frame, cv::Mat &image_rgb,cv::Mat &image_to_track,int &image_n,cv::Mat &image_gray,cv::Mat cameraMatrix,cv::Mat distCoeffs,\
                    double &fx,double &fy, double &cx, double &cy, int distortion, int reduction)
 {
@@ -99,3 +120,4 @@ void prepare_image(cv::Mat &image_frame, cv::Mat &image_rgb,cv::Mat &image_to_tr
 
     image_to_track /= (255*1.0);
 }
+*/
