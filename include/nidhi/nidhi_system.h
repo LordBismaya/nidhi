@@ -2,6 +2,7 @@
 #define __NIDHI_SYSTEM_H
 
 #include <nidhi/nidhi_headers.h>
+#include <nidhi/nidhi_mapper.h>
 #include <nidhi/nidhi_tracker.h>
 #include <nidhi/nidhi_datastruct.h>
 
@@ -12,7 +13,7 @@ public:
     ~nidhi_system();
 	void imgcb(const sensor_msgs::Image::ConstPtr& msg);
 	NidhiTracker semidense_tracker;
-
+	NidhiMapper semidense_mapper;
 	
 	int frame_id;
     double stamps;
@@ -20,7 +21,9 @@ public:
     double depth_stamps;
     ros::Time current_time,stamps_ros;
 
-	ros::NodeHandle nh;
+    
+
+   	ros::NodeHandle nh;
 	image_transport::Subscriber sub_image;
 	image_transport::Publisher pub_image;
 

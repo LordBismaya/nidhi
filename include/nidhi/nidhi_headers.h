@@ -21,6 +21,7 @@ using namespace Eigen;
 #include <opencv2/core/eigen.hpp>
 
 #include <boost/thread/thread.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/filesystem.hpp>
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>

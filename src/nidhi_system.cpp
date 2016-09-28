@@ -1,7 +1,7 @@
 #include <nidhi/nidhi_system.h>
-#include <nidhi/nidhi_tracker.h>
 
 #include <ros/package.h>
+
 nidhi_system::nidhi_system()
 {
 
@@ -22,9 +22,10 @@ nidhi_system::nidhi_system()
 	semidense_tracker.cont_frames = &frame_id;
     semidense_tracker.stamps = &stamps;
     semidense_tracker.stamps_ros = &stamps_ros ;
-
-    boost::thread thread_semidense_tracker(&ThreadSemiDenseTracker,&semidense_tracker,&odom_pub,&pub_image);
     
+            
+    boost::thread thread_semidense_tracker(&ThreadSemiDenseTracker,&semidense_tracker,&odom_pub,&pub_image);
+    boost::thread thread_semidense_mapper(&ThreadSemiDenseMapper,&semidense_mapper,&semidense_tracker);
 };
 nidhi_system::~nidhi_system()
 {

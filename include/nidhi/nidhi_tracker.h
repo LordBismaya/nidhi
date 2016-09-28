@@ -27,7 +27,9 @@ public:
 	int *cont_frames;
 	double *stamps;
     ros::Time *stamps_ros;
-
+    
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr_t;
+    boost::mutex viz_mutex;
     
 };
 void ThreadSemiDenseTracker(NidhiTracker *semidense_tracker,ros::Publisher *odom_pub,image_transport::Publisher *pub_image);

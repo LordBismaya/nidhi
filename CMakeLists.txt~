@@ -15,7 +15,7 @@ set(CMAKE_BUILD_TYPE Debug)
 catkin_package(CATKIN_DEPENDS roscpp sensor_msgs image_transport cv_bridge tf)
 
 set(DENSE_SOURCE_FILES     
-#		src/SemiDenseMapping.cpp
+		src/nidhi_mapper.cpp
 #                src/DenseMapping.cpp
                 src/nidhi_tracker.cpp
                 src/nidhi_system.cpp
@@ -26,7 +26,7 @@ set(DENSE_SOURCE_FILES
 
 
 set(DENSE_HEADER_FILES  
-#		include/dpptam/SemiDenseMapping.h
+		include/nidhi/nidhi_mapper.h
 #                include/dpptam/DenseMapping.h
                 include/nidhi/nidhi_tracker.h
                 include/nidhi/nidhi_system.h
@@ -65,7 +65,7 @@ include_directories(
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall -Wextra -pedantic  -Wcast-qual -Wpointer-arith -Winit-self -Wswitch-default -Wmissing-include-dirs -Wold-style-cast -Wnon-virtual-dtor -Wshadow -Wno-unknown-pragmas")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
 
 link_directories(${PCL_LIBRARY_DIRS})
 ###########

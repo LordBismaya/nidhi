@@ -15,7 +15,7 @@ set(CMAKE_BUILD_TYPE Debug)
 catkin_package(CATKIN_DEPENDS roscpp sensor_msgs image_transport cv_bridge tf)
 
 set(DENSE_SOURCE_FILES     
-#		src/SemiDenseMapping.cpp
+		src/nidhi_mapper.cpp
 #                src/DenseMapping.cpp
                 src/nidhi_tracker.cpp
                 src/nidhi_system.cpp
@@ -26,7 +26,7 @@ set(DENSE_SOURCE_FILES
 
 
 set(DENSE_HEADER_FILES  
-#		include/dpptam/SemiDenseMapping.h
+		include/nidhi/nidhi_mapper.h
 #                include/dpptam/DenseMapping.h
                 include/nidhi/nidhi_tracker.h
                 include/nidhi/nidhi_system.h

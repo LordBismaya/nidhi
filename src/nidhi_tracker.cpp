@@ -2,6 +2,7 @@
 #include <nidhi/nidhi_system.h>
 #include "opencv2/highgui/highgui.hpp"
 #include <iostream>
+
 NidhiTracker::NidhiTracker()
 {
    cv::FileStorage  fs2( (ros::package::getPath("nidhi")+"/src/data.yml").c_str(), cv::FileStorage::READ);
@@ -51,7 +52,10 @@ void semidense_tracking(ImageFrame *KeyFrame,ImageFrame *CurrentFrame,NidhiTrack
 		sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(),"mono8",image_show).toImageMsg();
 		pub_image->publish(msg);
 		
-		visualizePoints(CurrentFrame->point_cloud_ptr);
+		//visualizePoints(CurrentFrame->point_cloud_ptr);
+		semidense_tracker->viz_mutex.lock();
+		semidense_tracker->point_cloud_ptr_t=CurrentFrame->point_cloud_ptr;
+		semidense_tracker->viz_mutex.unlock();
 	}
 }
 void visualizePoints(pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr)
