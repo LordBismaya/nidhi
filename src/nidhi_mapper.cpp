@@ -10,14 +10,17 @@ NidhiMapper::NidhiMapper()
 NidhiMapper::~NidhiMapper()
 {}
 
-void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense_tracker)
+void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense_tracker,ros::Publisher *pubPCL)
 {
     
 
-    pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
+	pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
     viewer.addCoordinateSystem (100.0, 0);
 	viewer.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
     
+    
+
+
     while (ros::ok())
     {
 		
@@ -33,9 +36,14 @@ void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense
 			//viewer.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "original_cloud");
 	  		//VISUALIZATION
 
-			boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+	  		boost::this_thread::sleep(boost::posix_time::milliseconds(1));
 			viewer.spinOnce();
+
+			
+			pubPCL->publish(semidense_mapper->point_cloud_ptr_m);
 			semidense_tracker->viz_mutex.unlock();
 		}
     }
 }
+
+  

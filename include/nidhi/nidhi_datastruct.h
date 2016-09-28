@@ -23,8 +23,6 @@ public:
 	vector<cv::Mat> points;
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr;
 
-    
-	
 	void setFrame(cv::Mat image_frame_inp);
 	void calc_GrayImage(cv::Mat image_frame);
 	void calc_GradPyramids(cv::Mat image_gray);
@@ -35,6 +33,5 @@ public:
 	void type2str(cv::Mat M);
 
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr MatToPoinXYZ2();
-
 };
 #endif

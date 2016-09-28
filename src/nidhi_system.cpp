@@ -1,5 +1,4 @@
 #include <nidhi/nidhi_system.h>
-
 #include <ros/package.h>
 
 nidhi_system::nidhi_system()
@@ -14,9 +13,11 @@ nidhi_system::nidhi_system()
 
 	image_transport::ImageTransport it(nh);
 	sub_image=it.subscribe(camera_path,1, &nidhi_system::imgcb,this);
-
-	odom_pub=nh.advertise<nav_msgs::Odometry>("odom1",50);
 	pub_image=it.advertise("nidhi/camera/image",1);
+	
+	odom_pub=nh.advertise<nav_msgs::Odometry>("odom1",50);
+	pubPCL= nh.advertise<pcl::PointCloud <pcl::PointXYZRGB> >("points2", 1);
+
 	
 	semidense_tracker.image_frame = &image_frame_aux;
 	semidense_tracker.cont_frames = &frame_id;
@@ -25,7 +26,7 @@ nidhi_system::nidhi_system()
     
             
     boost::thread thread_semidense_tracker(&ThreadSemiDenseTracker,&semidense_tracker,&odom_pub,&pub_image);
-    boost::thread thread_semidense_mapper(&ThreadSemiDenseMapper,&semidense_mapper,&semidense_tracker);
+    boost::thread thread_semidense_mapper(&ThreadSemiDenseMapper,&semidense_mapper,&semidense_tracker,&pubPCL);
 };
 nidhi_system::~nidhi_system()
 {

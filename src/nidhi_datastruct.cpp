@@ -9,6 +9,7 @@ ImageFrame::ImageFrame(int pyra_levels=4)
 	grad_pyr.resize(pyramid_levels+1);
 
 	isKF=false;
+
 	
 }
 ImageFrame::~ImageFrame()
@@ -187,11 +188,13 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr ImageFrame::MatToPoinXYZ2()
 				uint32_t rgb = ((uint32_t)r << 16 | (uint32_t)g << 8 | (uint32_t)b);
 				pointPCL.rgb = *reinterpret_cast<float*>(&rgb);
 		   		point_cloud_ptr_aux -> points.push_back(pointPCL);
-	    	}		
+		   	}		
     	}
     }
-	point_cloud_ptr_aux->width = (int)point_cloud_ptr_aux->points.size();
+	point_cloud_ptr_aux->header.stamp = ros::Time::now().toNSec();
+    point_cloud_ptr_aux->header.frame_id = "map";
 
+	point_cloud_ptr_aux->width = (int)point_cloud_ptr_aux->points.size();
 	point_cloud_ptr_aux->height = 1;
 	return point_cloud_ptr_aux;
 }

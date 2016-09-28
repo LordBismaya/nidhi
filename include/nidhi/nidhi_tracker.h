@@ -27,7 +27,7 @@ public:
 	int *cont_frames;
 	double *stamps;
     ros::Time *stamps_ros;
-    
+
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr_t;
     boost::mutex viz_mutex;
     

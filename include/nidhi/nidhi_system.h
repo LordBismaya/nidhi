@@ -11,7 +11,7 @@ class nidhi_system
 public:
 	nidhi_system();
     ~nidhi_system();
-	void imgcb(const sensor_msgs::Image::ConstPtr& msg);
+	
 	NidhiTracker semidense_tracker;
 	NidhiMapper semidense_mapper;
 	
@@ -24,11 +24,13 @@ public:
     
 
    	ros::NodeHandle nh;
+   	
 	image_transport::Subscriber sub_image;
+	void imgcb(const sensor_msgs::Image::ConstPtr& msg);
 	image_transport::Publisher pub_image;
 
 	ros::Publisher odom_pub;
-
+	ros::Publisher pubPCL;
 };
 #endif
 

@@ -15,6 +15,6 @@ public:
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr_m; 
 	
 };
-void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense_tracker);
+void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense_tracker, ros::Publisher *pubPCL);
 
 #endif

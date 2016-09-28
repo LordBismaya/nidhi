@@ -51,7 +51,7 @@ void semidense_tracking(ImageFrame *KeyFrame,ImageFrame *CurrentFrame,NidhiTrack
 		cv::Mat image_show=(CurrentFrame->grad_pyr[semidense_tracker->pyramid_levels-1-1-1]).clone();
 		sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(),"mono8",image_show).toImageMsg();
 		pub_image->publish(msg);
-		
+
 		//visualizePoints(CurrentFrame->point_cloud_ptr);
 		semidense_tracker->viz_mutex.lock();
 		semidense_tracker->point_cloud_ptr_t=CurrentFrame->point_cloud_ptr;

@@ -41,6 +41,8 @@ using namespace Eigen;
 #include <pcl/point_cloud.h>
 #include <pcl/common/transforms.h>
 #include <pcl/visualization/pcl_visualizer.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl/point_types.h>
 
 using namespace std;
 
