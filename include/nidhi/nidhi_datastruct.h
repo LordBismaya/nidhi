@@ -7,10 +7,10 @@
 class ImageFrame
 {
 public:
-	ImageFrame(int pyra_levels);
+	ImageFrame(cv::Mat camMat, int pyra_levels);
 	~ImageFrame();
 	int pyramid_levels;
-
+	double cx,cy,fx,fy;
 	cv::Mat image_frame;
 	cv::Mat image_gray;
 

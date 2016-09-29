@@ -1,8 +1,13 @@
 #include <nidhi/nidhi_datastruct.h>
 
-ImageFrame::ImageFrame(int pyra_levels=4)
+ImageFrame::ImageFrame(cv::Mat camMat,int pyra_levels=4)
 {
 	pyramid_levels=pyra_levels;
+	fx=camMat.at<double>(0,0);
+	fy=camMat.at<double>(1,1);
+	cx=camMat.at<double>(0,2);
+	cy=camMat.at<double>(1,2);
+
 	R=(cv::Mat_<double>(3,3)<<1,0,0,0,1,0,0,0,1);
 	t=(cv::Mat_<double>(3,1)<<0,0,0);
 	image_pyr.resize(pyramid_levels+1);
@@ -168,7 +173,7 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr ImageFrame::MatToPoinXYZ2()
 	pcl::PointXYZRGB pointPCL;
 	cv::Vec3b intensity;
 	cv::Scalar grad_intensity;
-
+	double depth=1;
 	for (int ii=0;ii<image_con.rows;ii++)
 	{
 		for(int jj=0;jj<image_con.cols;jj++)
@@ -177,16 +182,16 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr ImageFrame::MatToPoinXYZ2()
 		   	if(grad_intensity.val[0]>20)
 		   	{
 			   	intensity = image_con.at<cv::Vec3b>(ii,jj);
-			   	pointPCL.x = jj;
-		   		pointPCL.y = ii;
-		   		pointPCL.z = 0.05;
+			   	pointPCL.x = ((jj-cx)/fx);
+		   		pointPCL.y = ((ii-cy)/fy);
+		   		pointPCL.z = depth;
 		   		// pack r/g/b into rgb
 				uint8_t r = intensity.val[2];
 				uint8_t g = intensity.val[1];
 				uint8_t b = intensity.val[0];
 				uint32_t rgb = ((uint32_t)r << 16 | (uint32_t)g << 8 | (uint32_t)b);
 				pointPCL.rgb = *reinterpret_cast<float*>(&rgb);
-		   		point_cloud_ptr_aux -> points.push_back(pointPCL);
+				point_cloud_ptr_aux -> points.push_back(pointPCL);
 	    	}		
     	}
     }

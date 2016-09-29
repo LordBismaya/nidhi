@@ -39,7 +39,7 @@ void semidense_tracking(ImageFrame *KeyFrame,ImageFrame *CurrentFrame,NidhiTrack
 //void prepare_image(cv::Mat &image_frame, cv::Mat &image_rgb,cv::Mat &image_to_track,int &image_n,cv::Mat &image_gray,cv::Mat cameraMatrix,cv::Mat distCoeffs,\
                    double &fx,double &fy, double &cx, double &cy, int distortion, int reduction);
 void visualizePoints(pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr);
-
+cv::Mat ICA(cv::Mat imageKF,cv::Mat imageCF);
 
 
 #endif

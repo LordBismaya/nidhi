@@ -15,7 +15,7 @@ void ThreadSemiDenseMapper(NidhiMapper *semidense_mapper,NidhiTracker *semidense
     
 
     pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
-    viewer.addCoordinateSystem (100.0, 0);
+    viewer.addCoordinateSystem (0.5, 0);
 	viewer.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
     
     while (ros::ok())

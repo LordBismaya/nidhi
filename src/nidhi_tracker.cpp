@@ -19,10 +19,9 @@ NidhiTracker::NidhiTracker()
 void ThreadSemiDenseTracker(NidhiTracker *semidense_tracker,ros::Publisher *odom_pub,image_transport::Publisher *pub_image)
 {
     
-    ImageFrame KeyFrame(semidense_tracker->pyramid_levels);
-    ImageFrame CurrentFrame(semidense_tracker->pyramid_levels);
-    ImageFrame lastFrame(semidense_tracker->pyramid_levels);
-    
+    ImageFrame KeyFrame(semidense_tracker->cameraMatrix,semidense_tracker->pyramid_levels);
+    ImageFrame CurrentFrame(semidense_tracker->cameraMatrix,semidense_tracker->pyramid_levels);
+    ImageFrame lastFrame(semidense_tracker->cameraMatrix,semidense_tracker->pyramid_levels);
     while (ros::ok())
     {
 		   
@@ -54,6 +53,7 @@ void semidense_tracking(ImageFrame *KeyFrame,ImageFrame *CurrentFrame,NidhiTrack
 		
 		//visualizePoints(CurrentFrame->point_cloud_ptr);
 		semidense_tracker->viz_mutex.lock();
+
 		semidense_tracker->point_cloud_ptr_t=CurrentFrame->point_cloud_ptr;
 		semidense_tracker->viz_mutex.unlock();
 	}
@@ -75,6 +75,43 @@ void visualizePoints(pcl::PointCloud<pcl::PointXYZRGB>::Ptr point_cloud_ptr)
   	}
 
 }
+/*cv::Mat(cv::Mat image_KF,cv::Mat image_CF)
+{
+	// Some constants for iterative minimization process.
+    const float EPS = 1E-5f; // Threshold value for termination criteria.
+    const int MAX_ITER = 100;  // Maximum iteration count.
+
+	//convert to gray images
+	cv::cvtColor(image_KF, gray_KF, CV_BGR2GRAY);
+	cv::cvtColor(image_CF, gray_CF, CV_BGR2GRAY);
+	//calculate gradients
+	cv::Mat pGradTx,pGradTy;
+	cv::cvSobel(image_KF, pGradTx, 1, 0); // Gradient in X direction
+	cv::cvConvertScale(pGradTx, pGradTx, 0.125);
+	cv::cvSobel(image_KF, pGradTy, 0, 1); // Gradient in X direction
+	cv::cvConvertScale(pGradTy, pGradTy, 0.125);
+	cv::Mat pStDesc;
+	// Here we will store matrices.
+	cv::Mat W = cv::Mat::eye(4, 4, CV_32F);  // Current value of warp W(x,p)
+	cv::Mat dW = cv::Mat::zeros(4, 4, CV_32F);  // Warp update.
+	cv::Mat idW = cv::Mat::eye(4, 4, CV_32F); // Inverse of warp update.
+	cv::Mat X = cv::Mat::zeros(4, 1, CV_32F);  // Point in coordinate frame of T.
+	cv::Mat Z = cv::Mat::zeros(4, 1, CV_32F);  // Point in coordinate frame of I.
+
+	cv::Mat H = cv::Mat::zeros(4, 4, CV_32F);  // Hessian.
+	cv::Mat iH = cv::Mat::eye(4, 4, CV_32F); // Inverse of Hessian.
+	cv::Mat b = cv::Mat::zeros(4, 1, CV_32F);  // Vector in the right side of the system of linear equations.
+	cv::Mat delta_p =cv::Mat::zeros(4, 1, CV_32F); // Parameter update value.
+
+	int u,v;
+	float u2,v2;
+
+	/*Transform with Calibration Matrix Now*/
+
+	/*Assume it is transformed and proceeding/
+
+}
+*/
 
 /*
 void prepare_image(cv::Mat &image_frame, cv::Mat &image_rgb,cv::Mat &image_to_track,int &image_n,cv::Mat &image_gray,cv::Mat cameraMatrix,cv::Mat distCoeffs,\
